@@ -3,30 +3,35 @@
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
       <!-- tells Angular to take our created form rather than create one automatically -->
       <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <!-- linking each input to the controls in our form in the ts file using formControlName-->
-          <input
-            type="text"
-            id="username"
-            formControlName="username"
-            class="form-control">
-          <span
-          *ngIf="!signupForm.get('username').valid && signupForm.get('username').touched"
-          class="help-block">Please enter a valid username!
-          </span>
-        </div>
-        <div class="form-group">
-          <label for="email">email</label>
-          <input
-            type="text"
-            id="email"
-            formControlName="email"
-            class="form-control">
-          <span
-          *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched"
-          class="help-block">Please enter a valid email!
-          </span>
+        <div formGroupName="userData"> <!-- grouping username and email inputs together into a 'userData' FormGroup within the main signupForm FormGroup -->
+          <div class="form-group">
+            <label for="username">Username</label>
+            <!-- linking each input to the controls in our form in the ts file using formControlName-->
+            <input
+              type="text"
+              id="username"
+              formControlName="username"
+              class="form-control">
+              <!-- the spans will only show if person has clicked the field but has given invalid input -->
+              <!-- need to update the paths for get since this input is now nested-->
+            <span
+            *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched"
+            class="help-block">Please enter a valid username!
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="email">email</label>
+            <input
+              type="text"
+              id="email"
+              formControlName="email"
+              class="form-control">
+              <!-- need to update the paths for get since this input is now nested-->
+            <span
+            *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched"
+            class="help-block">Please enter a valid email!
+            </span>
+          </div>
         </div>
         <div class="radio" *ngFor="let gender of genders">
           <label>
