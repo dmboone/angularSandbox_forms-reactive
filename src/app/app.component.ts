@@ -9,6 +9,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 export class AppComponent implements OnInit{
   genders = ['male', 'female'];
   signupForm: FormGroup;
+  forbiddenUsernames = ['Chris', 'Anna'];
 
   ngOnInit(){
     this.signupForm = new FormGroup({ // creates a form
@@ -16,8 +17,8 @@ export class AppComponent implements OnInit{
       'gender': new FormControl('female'), // can set a default rather than choosing null
 
       // creating a form group within the main form group
-      'userData': new FormGroup({
-        'username': new FormControl(null, Validators.required), // form control is done here rather than in the html file by using Validators
+      'userData': new FormGroup({                                                   // need to bind this for it to work because the validator gets called by Angular rather than inside the typescript file
+        'username': new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]), // form control is done here rather than in the html file by using Validators
         'email': new FormControl(null, [Validators.required, Validators.email]), // if multiple validators use an array
       }),
 
@@ -37,5 +38,16 @@ export class AppComponent implements OnInit{
 
   getControls(){
     return (<FormArray>this.signupForm.get('hobbies')).controls;
+  }
+
+  // creating our own validator - takes in a form control and returns an object with a key name that has a value of either true or false
+  forbiddenNames(control: FormControl): {[s: string] : boolean} 
+  {
+    if(this.forbiddenUsernames.indexOf(control.value) !== -1){ // if the input from the formControl matches any of the values in our forbiddenUsernames array
+      return {'nameisForbidden': true};
+    } // otherwise indexOf returns -1 if it doesn't find the string in the array
+    else{ // if validation is sucessfull you need to return nothing or null!
+      return null
+    }
   }
 }
