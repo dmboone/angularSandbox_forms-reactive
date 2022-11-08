@@ -41,6 +41,17 @@
               [value]="gender">{{ gender }}
           </label>
         </div>
+        <div formArrayName="hobbies"> <!-- linking our FormArray -->
+          <h4>Your Hobbies</h4>
+          <button class="btn btn-default" type="button" (click)="onAddHobby()">Add Hobby</button>
+          <!-- loops through our hobbies FormArray from the ts file while also grabbing the index and 
+            prints each new form control to the screen and giving it a name that corresponds to the index -->
+            <!-- so with each form control we add to the FormsArray using the onAddHobby method we can then
+              output it to the screen and fill it with an individual hobby when we run this ngFor and use getControls-->
+          <div class="form-group" *ngFor="let hobbyControl of getControls(); let i = index">
+            <input type="text" class="form-control" [formControlName]="i">
+          </div>
+        </div>
         <span
           *ngIf="!signupForm.valid && signupForm.touched"
           class="help-block">Please enter valid data!
