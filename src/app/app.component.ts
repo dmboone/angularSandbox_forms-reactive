@@ -25,7 +25,21 @@ export class AppComponent implements OnInit{
 
       // form array - holds an array of controls
       'hobbies': new FormArray([])
-    }); 
+    });
+
+    // Tracking Value Changes
+    // this.signupForm.valueChanges.subscribe(
+    //   (value) => {
+    //     console.log(value);
+    //   }
+    // );
+
+    // Tracking Status Changes
+    // this.signupForm.statusChanges.subscribe(
+    //   (status) => {
+    //     console.log(status);
+    //   }
+    // );
   }
 
   onSubmit(){
