@@ -40,10 +40,30 @@ export class AppComponent implements OnInit{
     //     console.log(status);
     //   }
     // );
+
+    // Setting Values - for defining values for the entire form
+    // this.signupForm.setValue({
+    //   'userData': {
+    //     'username': 'Max',
+    //     'email': 'max@test.com'
+    //   },
+    //   'gender': 'male',
+    //   'hobbies': []
+    // });
+
+    // Patching Values - for defining values for specific parts of form
+    // this.signupForm.patchValue({
+    //   'userData': {
+    //     'username': 'Max',
+    //   },
+    //   'gender': 'male',
+    // });
   }
 
   onSubmit(){
     console.log(this.signupForm);
+    this.signupForm.reset(); // resets form on submission
+    // can also pass an object to reset so it only resets specific values rather than the whole form
   }
 
   onAddHobby(){ // this method creates a new form control with no default input (null) and pushes it onto our hobbies Form Array
