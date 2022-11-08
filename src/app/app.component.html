@@ -16,7 +16,14 @@
               <!-- need to update the paths for get since this input is now nested-->
             <span
             *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched"
-            class="help-block">Please enter a valid username!
+            class="help-block">
+              <!-- nesting some spans within the larger one since there are multiple different types of errors that could occur here now -->
+              <span *ngIf="signupForm.get('userData.username').errors['nameisForbidden']">
+                This name is invalid!
+              </span>
+              <span *ngIf="signupForm.get('userData.username').errors['required']">
+                This field is required!
+              </span>
             </span>
           </div>
           <div class="form-group">
