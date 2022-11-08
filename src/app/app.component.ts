@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,7 @@ export class AppComponent implements OnInit{
       // creating a form group within the main form group
       'userData': new FormGroup({                                                   // need to bind this for it to work because the validator gets called by Angular rather than inside the typescript file
         'username': new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]), // form control is done here rather than in the html file by using Validators
-        'email': new FormControl(null, [Validators.required, Validators.email]), // if multiple validators use an array
+        'email': new FormControl(null, [Validators.required, Validators.email], this.forbiddenEmails), // if multiple validators use an array; asynchronous validators are their own separate parameter
       }),
 
       // form array - holds an array of controls
@@ -49,5 +50,21 @@ export class AppComponent implements OnInit{
     else{ // if validation is sucessfull you need to return nothing or null!
       return null
     }
+  }
+
+  // creating a custom asynchronous validator
+  forbiddenEmails(control: FormControl): Promise<any> | Observable<any>{
+    const promise = new Promise<any>((resolve, reject) => {
+      setTimeout(() => {
+        if(control.value === 'test@test.com'){
+          resolve({'emailIsForbidden': true});
+        }
+        else{
+          resolve(null);
+        }
+      }, 1500)
+    });
+
+    return promise;
   }
 }
