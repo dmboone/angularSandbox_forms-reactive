@@ -1,7 +1,8 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <form [formGroup]="signupForm"> <!-- tells Angular to take our created form rather than create one automatically -->
+      <!-- tells Angular to take our created form rather than create one automatically -->
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="username">Username</label>
           <!-- linking each input to the controls in our form in the ts file using formControlName-->

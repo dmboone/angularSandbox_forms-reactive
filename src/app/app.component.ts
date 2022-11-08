@@ -18,4 +18,8 @@ export class AppComponent implements OnInit{
       'gender': new FormControl('female'), // can set a default rather than choosing null
     }); 
   }
+
+  onSubmit(){
+    console.log(this.signupForm);
+  }
 }
